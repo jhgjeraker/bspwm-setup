@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Fetch information about which distro is running.
-distro=$(cat /etc/os-release | grep -i ID= | grep -P -o '(?<==).*$' | head -1)
+# distro=$(cat /etc/os-release | grep -i ID= | grep -P -o '(?<==).*$' | head -1)
+distro=$(grep -i ID= < /etc/os-release | grep -P -o '(?<==).*$' | head -1)
 
 # Install packages required for a quick setup.
 if [[ "$distro" =~ ^(arch|endeavouros)$ ]]; then
-    sudo pacman -Syu --needed --noconfirm - < packages/arch 
+     sudo pacman -Syu --needed --noconfirm < packages/arch
 else
     echo "Distro \"$distro\" not supported."
     exit
@@ -15,11 +16,11 @@ fi
 # This will replace any existing files.
 chmod +x .config/bspwm/bspwmrc
 chmod -R +x .config/polybar/scripts/
-rsync -r .config/* $HOME/.config/
-rsync .xinitrc $HOME/
-rsync .bashrc $HOME/
-rsync .bash_profile $HOME/
-rsync .gtkrc-2.0 $HOME/
+rsync -r .config/* "$HOME/.config/"
+rsync .xinitrc "$HOME/"
+rsync .bashrc "$HOME/"
+rsync .bash_profile "$HOME/"
+rsync .gtkrc-2.0 "$HOME/"
 
 # Deploy scripts to /usr/local/bin/.
 chmod -R +x scripts/
@@ -34,11 +35,11 @@ pkill -USR1 -x sxhkd
 
 # Add user to the video group.
 # This is required for brightness controls.
-sudo usermod -aG video $(whoami)
+sudo usermod -aG video "$(whoami)"
 
 # Deploy fonts.
-mkdir -p $HOME/.local/share/fonts
-rsync -r fonts/* $HOME/.local/share/fonts/
+mkdir -p "$HOME/.local/share/fonts"
+rsync -r fonts/* "$HOME/.local/share/fonts/"
 fc-cache -f
 
 # Directory casing is annoying and takes longer to write out, so
@@ -47,14 +48,14 @@ fc-cache -f
 for dir in "Desktop" "Documents" "Downloads" "Music" "Pictures" "Public" "Templates" "Videos"
 do
     if [ -d "$HOME/$dir" ]; then
-        mv $HOME/$dir $HOME/$(echo "$dir" | tr '[:upper:]' '[:lower:]')
+        mv "$HOME/$dir" "$HOME/$(echo "$dir" | tr '[:upper:]' '[:lower:]')"
     fi
 done
 
 # Install pyenv and pyenv-virtualenv for python version management.
 if [ ! -d "$HOME/.pyenv" ]; then
      git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-     git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+     git clone https://github.com/pyenv/pyenv-virtualenv.git "$(pyenv root)/plugins/pyenv-virtualenv"
 fi
 
 # Install fzf for an amazing general-purpose fuzzy finger.
