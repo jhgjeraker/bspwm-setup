@@ -19,9 +19,24 @@ PRIMARY_MONITOR=$(xrandr | grep primary | cut -d ' ' -f 1)
 OUTPUTS=($(xrandr --listactivemonitors|awk '{print $4}'|sed '/^$/d'))
 NB_OF_MONITORS=${#OUTPUTS[@]}
 
+ws=0
 for MONITOR in ${OUTPUTS[@]}; do
-    bspc monitor $MONITOR -d 1 2 3 4 5 6 7 8 9 10
+    workspaces=''
+    if [[ "$MONITOR" == "$PRIMARY_MONITOR" ]]; then
+        for i in $(seq $( expr 10 - $NB_OF_MONITORS + 1 )); do
+            workspaces="$workspaces$( expr $i ) "
+            ws=$( expr $ws + 1 )
+        done
+        echo "$MONITOR: $workspaces"
+    else
+        workspaces="$( expr $ws + 1 )"
+        echo "$MONITOR: $workspaces"
+        ws=$( expr $ws + 1 )
+    fi
+    echo "$workspaces"
 
+
+    bspc monitor $MONITOR -d $workspaces
     ## reorder the desktops for each monitor
     bspc monitor $MONITOR -o $(eval _desk_order $MONITOR)
 done

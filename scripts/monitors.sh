@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if ! ls -a1 "$HOME/" | grep '.screenlayout'; then
     echo 'Directory $HOME/.screenlayout missing.'
@@ -13,5 +13,5 @@ fi
 sh "$HOME/.screenlayout/m$1.sh"
 
 # Reset bspwm monitors and polybar.
-sh /usr/local/bin/bspwm-monitor-setup.sh
-sh /usr/local/bin/bspwm-refresh.sh
+bash /usr/local/bin/bspwm-monitor-setup.sh
+bash /usr/local/bin/bspwm-refresh.sh

@@ -15,4 +15,4 @@ xsetroot -cursor_name left_ptr
 $HOME/.fehbg &
 
 # Relaunch polybar.
-bash $HOME/.config/polybar/launch.sh > /dev/null 2>&1
+bash /usr/local/bin/polybar-launch.sh > /dev/null 2>&1

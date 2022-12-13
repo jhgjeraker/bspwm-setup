@@ -43,12 +43,15 @@ super + ctrl + {m,x,y,z}
 # Focus / Swap
 #
 # Focus node in given direction.
-alt + {_,shift + }{h,j,k,l}
-    bspc node -{f,s} {west,south,north,east}
+alt + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+alt + shift + {h,j,k,l}
+    d={west,south,north,east}; bspc node -s $d.local --follow || bspc node -m $d --follow
 
 # Focus or send node to given desktop.
 alt + {_,shift + }{1-9,0}
-    bspc {desktop -f,node -d} focused:'^{1-9,10}'
+    bspc {desktop -f,node -d} '{1-9,10}'
 
 
 # -----------------------------------------------
@@ -161,18 +164,11 @@ super + m
     bash /usr/local/bin/bspwm-monitor-setup.sh
 
 # Move desktop to next/prev monitor.
-super + {_,shift + }Tab
+alt + {x,z}
 	bspc desktop -m {next,prev} --follow && \
 	bspc query -M | while read -r monitor; do \
 	    bspc query -D -m "$monitor" --names | sort -g | xargs -rd'\n' bspc monitor "$monitor" -o; \
 	done
-
-# Sort desktops on active monitor, then remove default 'Desktop'.
-super + x
-	bspc query -M | while read -r monitor; do \
-	    bspc query -D -m "$monitor" --names | sort -g | xargs -rd'\n' bspc monitor "$monitor" -o; \
-	done && \
-        bspc desktop Desktop --remove
 
 
 # -----------------------------------------------
@@ -184,7 +180,7 @@ alt + Return
 
 # Launcher.
 alt + d
-    dmenu_run
+    rofi -show run -monitor primary
 
 # Lock screen.
 super + l
@@ -206,8 +202,8 @@ alt + n
 Print
     flameshot gui
 
-super + b
-    bash /usr/local/bin/power-manager.sh &
+alt + Escape
+    bash /usr/local/bin/sysinfo.sh &
 
 super + p
     bash /usr/local/bin/polybar-toggle.sh &

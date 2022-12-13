@@ -10,9 +10,9 @@ bspc config automatic_scheme              longest_side
 bspc config split_ratio                   0.50
 bspc config border_width                  3
 bspc config single_monocle                true
-bspc config borderless_monocle            true
+bspc config borderless_monocle            false
 bspc config gapless_monocle               false
-bspc config focus_follows_pointer         true
+bspc config focus_follows_pointer         false
 bspc config pointer_follows_focus         false
 bspc config pointer_follows_monitor       false
 bspc config remove_disabled_monitors      true
@@ -22,11 +22,11 @@ bspc config center_pseudo_tiled           true
 bspc config ignore_ewmh_focus             false
 
 # Gaps and padding.
-bspc config window_gap      +25
-bspc config bottom_padding  -10
-bspc config left_padding    -10
-bspc config right_padding   -10
-bspc config top_padding     +20
+bspc config window_gap       25
+bspc config bottom_padding  -25
+bspc config left_padding    -25
+bspc config right_padding   -25
+# bspc config top_padding      -10
 
 # mod1=Alt, mod4=super, mod5=AltGr
 bspc config pointer_modifier mod1

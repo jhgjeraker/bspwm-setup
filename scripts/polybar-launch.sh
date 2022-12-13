@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BAR_NAME='bar'
-BAR_CFG="$HOME/.config/polybar/config"
+BAR_CFG="$HOME/.config/polybar/config.ini"
 
 # Terminate already running bar instances.
 killall -q polybar

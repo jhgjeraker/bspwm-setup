@@ -3,6 +3,7 @@ bspwm
 sxhkd
 alacritty
 dmenu
+rofi
 firefox
 polybar
 light
